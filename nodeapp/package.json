@@ -1,0 +1,14 @@
+{
+    "name": "brain-stain",
+    "version": "0.1.0",
+    "description": "NEAT CSS",
+    "author": "Chris Rasys <chris.rasys@gmail.com>",
+    "license": "MIT",
+    "main": "app.js",
+    "keywords": [
+      "nodejs"
+    ],
+    "dependencies": {
+      "express": "^4.16.4"
+    }
+  }
