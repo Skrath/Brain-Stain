@@ -5,9 +5,8 @@ services:
     build: 
       context: .
       dockerfile: ./docker/node/dockerfile
-    # volumes:
-    #  - .:/app
-    #  - /app/vendor
-    #  - /app/bin
+    volumes:
+     - ./nodeapp/app.js:/home/node/app/app.js
+     - ./views:/home/node/app/views
     ports:
      - "80:8080"
