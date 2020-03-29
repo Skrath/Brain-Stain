@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: ./docker/node/dockerfile
     volumes:
-     - ./nodeapp/app.js:/home/node/app/app.js
-     - ./views:/home/node/app/views
+      - ./nodeapp/app.js:/home/node/app/app.js
+      - ./views:/home/node/app/views
     ports:
      - "80:8080"
