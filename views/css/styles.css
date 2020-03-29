@@ -1,6 +1,6 @@
 body {
-    background: #020A1B;
-    color: #ffffff;
+    color: #020A1B;
+    background: #ffffff;
     font-family: 'Merriweather', sans-serif;
 }
 
@@ -12,4 +12,33 @@ h2 {
 p {
     font-size: 16px;
     color: #ffffff;
+}
+
+.colorbox {
+    width: 50%;
+    background-color: black;
+    color: white;
+    min-height: 250px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 25px;
+}
+
+.colorbox p {
+    font-size: 4em;
+}
+
+form {
+    display: flex;
+    justify-content: center;
+}
+
+form div {
+    margin: 10px;
+}
+
+form div p {
+    color: black;
 }
