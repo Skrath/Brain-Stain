@@ -35,6 +35,10 @@ router.get('/js/testing.js', function(req,res){
     res.sendFile(path + 'js/testing.js');
 });
 
+router.get('/js/node-vis.js', function(req,res){
+    res.sendFile(path + 'js/node-vis.js');
+});
+
 router.get('/result', function(req, res) {
     console.log(req.query.color);
 
@@ -83,6 +87,7 @@ function activateNextNode(inputColor) {
         reference: {
             generation: neat.generation,
             index: activateNextNode.index,
+            brain: neat.population[activateNextNode.index].toJSON()
         }, 
         value: outputColor.color.hex()
     };
