@@ -96,11 +96,13 @@ function drawBrain(nodes_data, links_data, node, link) {
         //update link positions 
         //simply tells one end of the line to follow one node around
         //and the other end of the line to follow the other node around
+        
         link
             .attr("x1", function (d) { return d.source.x; })
             .attr("y1", function (d) { return d.source.y; })
             .attr("x2", function (d) { return d.target.x; })
-            .attr("y2", function (d) { return d.target.y; });
+            .attr("y2", function (d) { return d.target.y; })
+            .attr("stroke-width", function (d) { return (d.weight + 2) * 2});
 
     }
 }
