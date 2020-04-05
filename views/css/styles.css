@@ -53,3 +53,8 @@ form div p {
     stroke: #fff;
     stroke-width: 1.5px;
 }
+
+.nodeview {
+    display: block;
+    margin: auto;
+}
