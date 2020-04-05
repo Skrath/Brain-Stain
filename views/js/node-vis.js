@@ -22,12 +22,21 @@ $(function () {
     createBrain(nodes_data, links_data);
 });
 
-function redrawBrain(nodes_data, links_data) {
-    var svg = d3.select("svg");
+function redrawBrain(brain, links_data) {
+    var svg = d3.select("svg"),
+        width = +svg.attr("width"),
+        height = +svg.attr("height");
 
-    // var newCircle = svg.select("g").selectAll("circle").data([])
+    var nodes_data = brain.nodes;
+    brain.input_nodes.forEach((index, i) => {
+        nodes_data[index].fx = 5;
+        nodes_data[index].fy = (i * 15) + 15;
+    });
+    brain.output_nodes.forEach((index, i) => {
+        nodes_data[index].fx = (width - 5);
+        nodes_data[index].fy = (i * 15) + 15;
+    });
     
-    // svg.select("g").selectAll("line").data(links_data).exit().remove();
 
     svg.select("g").selectAll("line").remove();
     svg.select("g").selectAll("circle").remove();
