@@ -18,6 +18,16 @@ app.use(express.urlencoded());
 // Parse JSON bodies (as sent by API clients)
 app.use(express.json());
 
+// Use Handlebars as the view engine
+app.set('view engine', 'html');
+app.engine('html', require('hbs').__express);
+
+var hbs = require('hbs');
+
+hbs.registerPartials(__dirname + '/views/partials', function (err) {});
+
+hbs.localsAsTemplateData(app);
+
 router.use(function (req,res,next) {
     console.log('/' + req.method);
     next();
