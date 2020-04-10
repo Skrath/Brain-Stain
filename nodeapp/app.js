@@ -27,8 +27,8 @@ router.get('/', function(req,res){
     res.sendFile(path + 'index.html');
 });
 
-router.get('/css/styles.css', function(req,res){
-    res.sendFile(path + 'css/styles.css');
+router.get('/css/:file', function(req,res){
+    res.sendFile(path + 'css/' + req.params.file);
 });
 
 router.get('/js/testing.js', function(req,res){
