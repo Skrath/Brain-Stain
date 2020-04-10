@@ -49,6 +49,10 @@ router.get('/js/node-vis.js', function(req,res){
     res.sendFile(path + 'js/node-vis.js');
 });
 
+router.get('/admin', function(req, res) {
+    res.render(path + 'admin/layout.html');
+});
+
 router.get('/result', function(req, res) {
     console.log(req.query.color);
 
