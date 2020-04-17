@@ -19,6 +19,8 @@
 
 
     --fade-to-gray: linear-gradient(var(--main-color-light) 0%, var(--color-light-gray) 70%, var(--color-dark-gray) 90%, var(--color-light-gray) 99%);
+    --alt-fade-to-gray: linear-gradient(0deg, rgba(107,107,107,1) 0%, rgba(107,107,107,1) 5%, rgba(136,169,180,1) 25%, rgba(136,169,180,1) 31%, rgba(107,107,107,1) 83%, rgba(107,107,107,1) 88%, rgba(173,216,230,1) 100%);
+    --alt-angled-fade-to-gray: linear-gradient(-90deg, rgba(107,107,107,1) 0%, rgba(107,107,107,1) 5%, rgba(136,169,180,1) 25%, rgba(136,169,180,1) 31%, rgba(107,107,107,1) 83%, rgba(107,107,107,1) 88%, rgba(173,216,230,1) 100%);
 }
 
 body {
@@ -37,9 +39,14 @@ body {
 
 .header {
     grid-area: header;
-    background: var(--fade-to-gray);
+    background: linear-gradient(145deg, rgba(55, 65, 68, 0.35) 0, rgba(173,216,230,.25) 25%, rgba(173,216,230,.25) 65%, rgba(55, 65, 68, 0.35) 100%),
+        repeating-linear-gradient(132deg, rgba(173,216,230,.15) 0px, rgba(173,216,230,.15) 3px, rgba(37,37,37,.25) 4px, rgba(247, 247, 247, 0.25) 5px, rgba(247, 247, 247, 0.25) 6px),
+        repeating-linear-gradient(221deg, rgba(173,216,230,.15) 0px, rgba(173,216,230,.15) 3px, rgba(37,37,37,.25) 4px, rgba(247, 247, 247, 0.25) 5px, rgba(247, 247, 247, 0.25) 6px),
+        var(--alt-fade-to-gray);
     box-shadow: 0px 2px 3px var(--color-shadow);
     padding: 0 5px 0 5px;
+    mix-blend-mode: multiply;
+    border-radius: 0 0 5px 5px;
 }
 
 .header h1 {
@@ -48,11 +55,12 @@ body {
     letter-spacing: 0.3em;
     color: transparent;
     background-color: #421818;
-    text-shadow: 1px 1px 1px rgba(210, 137, 103,0.5);
+    text-shadow: 1px 1px 2px rgba(202, 186, 179, 0.5);
         -webkit-background-clip: text;
         -moz-background-clip: text;
         background-clip: text;
     mix-blend-mode: luminosity;
+    white-space: nowrap;
 }
 
 .infobar {
