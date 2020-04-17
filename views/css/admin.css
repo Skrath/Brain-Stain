@@ -24,12 +24,12 @@
 body {
     background-color: #444444;
     display: inline-grid;
-    grid-template-rows: 55px 40px auto 50px;
-    grid-template-columns: 50px auto 50px;
+    grid-template-rows: 55px 25px auto 50px;
+    grid-template-columns: 70px auto 50px;
     grid-template-areas: 
         "header header header"
-        "menu menu menu"
-        "left main right"
+        "infobar infobar infobar"
+        "menu main right"
         "footer footer footer"
     ;
     width: 100%;
@@ -53,6 +53,11 @@ body {
         -moz-background-clip: text;
         background-clip: text;
     mix-blend-mode: luminosity;
+}
+
+.infobar {
+    grid-area: infobar;
+    background: var(--main-color-light);
 }
 
 /* MENU */
