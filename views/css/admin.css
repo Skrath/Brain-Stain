@@ -101,5 +101,9 @@ body {
     border-left: var(--border-light);
     border-bottom: var(--border-shadow);
     justify-content: center;
-    white-space: nowrap;
+}
+
+.footer {
+    grid-area: footer;
+    justify-self: center;
 }
