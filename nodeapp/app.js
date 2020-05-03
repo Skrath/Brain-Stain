@@ -23,6 +23,10 @@ app.set('view engine', 'html');
 app.engine('html', require('hbs').__express);
 
 var hbs = require('hbs');
+var geoip = require('geoip-lite');
+var uaParser = require('ua-parser-js');
+var languageParser = require('accept-language-parser');
+var moment = require('moment-timezone');
 
 hbs.registerPartials(__dirname + '/views/partials', function (err) {});
 
@@ -32,6 +36,54 @@ router.use(function (req,res,next) {
     console.log('/' + req.method);
     next();
 });
+  
+function collectUserInfo(req) {
+    var userInfo = {};
+    var ua = uaParser(req.headers['user-agent']);
+    var languages = languageParser.parse(req.headers['accept-language']);
+    
+    userInfo.ip = req.ip;
+    var geo = geoip.lookup(userInfo.ip);
+    
+
+    if ( (ua !== null) && (ua !== undefined)) {
+        userInfo.browserName = ua.browser.name;
+        userInfo.browserMajorVersion = ua.browser.major;
+        userInfo.browserVersion = ua.browser.version;
+        userInfo.osName = ua.os.name;
+        userInfo.osVersion = ua.os.version;
+        userInfo.cpuArchitecture = ua.cpu.architecture;
+    }
+
+    if ( (geo !== null) && (geo !== undefined )) {
+        userInfo.country = geo.country;
+        userInfo.region = geo.region;
+        // look up what geo.eu is
+        userInfo.timezone = geo.timezone;
+        userInfo.city = geo.city;
+        userInfo.latitude = geo.ll[0];
+        userInfo.longitude = geo.ll[1];
+        userInfo.metro = geo.metro;
+        userInfo.area = geo.area;
+    }
+
+    if ( (languages !== null) && (languages !== undefined)) {
+        // We're only going to deal with the top result
+        userInfo.languageCode = languages[0].code;
+        userInfo.languageRegion = languages[0].region;
+    }
+
+    if (userInfo.timezone !== undefined) {
+        var currentTime = moment().tz(userInfo.timezone);
+        userInfo.day = currentTime.format('DD');
+        userInfo.month = currentTime.format('MM');
+        userInfo.year = currentTime.format('YYYY');
+        userInfo.hour = currentTime.format('HH');
+        userInfo.minute = currentTime.format('mm');
+    }
+
+    return userInfo;
+}
   
 router.get('/', function(req,res){
     res.sendFile(path + 'index.html');
