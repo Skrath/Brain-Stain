@@ -33,7 +33,8 @@ hbs.registerPartials(__dirname + '/views/partials', function (err) {});
 hbs.localsAsTemplateData(app);
 
 router.use(function (req,res,next) {
-    console.log('/' + req.method);
+    console.log( [req.hostname, req.protocol, '/' + req.method, req.originalUrl, 'from ' + req.ip].join(' '));
+
     next();
 });
   
