@@ -7,6 +7,7 @@ services:
       dockerfile: ./docker/node/dockerfile
     volumes:
       - ./nodeapp/app.js:/home/node/app/app.js
+      - ./nodeapp/classes/:/home/node/app/classes/
       - ./views:/home/node/app/views
     ports:
      - "80:8080"
