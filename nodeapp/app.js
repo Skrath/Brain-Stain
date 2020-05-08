@@ -10,8 +10,6 @@ const port = 8080;
 const { Neat } = require("@liquid-carrot/carrot");
 let neat = new Neat(1, 1, { population_size: 5 });
 
-var Color = require('color');
-
 // Parse URL-encoded bodies (as sent by HTML forms)
 app.use(express.urlencoded());
 
@@ -25,6 +23,7 @@ app.engine('html', require('hbs').__express);
 var hbs = require('hbs');
 
 var BSUser = require("./classes/BSUser.class.js");
+var BSColor = require("./classes/BSColor.class");
 
 hbs.registerPartials(__dirname + '/views/partials', function (err) {});
 
@@ -115,20 +114,3 @@ app.use('/', router);
 app.listen(port, function () {
     console.log('Example app listening on port '+port+'!');
 })
-
-class BSColor {
-    constructor(input) {
-        this.ratioValue = 16777215;
-        this.color = Color(input);
-    }
-
-    set nodeValue(input) {
-        var newColor = input * this.ratioValue;
-        this.color = Color(newColor);
-    }
-
-    get nodeValue() {
-        if (this.color.rgbNumber() == 0) return 0;
-        return  this.color.rgbNumber() / this.ratioValue;
-    }
-}
