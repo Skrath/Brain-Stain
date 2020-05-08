@@ -8,6 +8,10 @@
     "keywords": [
       "nodejs"
     ],
+    "repository": {
+      "type" : "git",
+      "url" : "https://github.com/Skrath/Brain-Stain.git"
+    },
     "dependencies": {
       "@liquid-carrot/carrot": "^0.3.18",
       "accept-language-parser": "^1.5.0",
