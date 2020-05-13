@@ -68,7 +68,7 @@ function loadConfig() {
         }
 
     } catch (e) {
-        console.log(e);
+        log(e, internal.loggingMasks.error);
     }
 }
 
@@ -129,6 +129,12 @@ router.post('/submitscore', function(req, res) {
     res.send('1');
 });
 
+function log(text, level = internal.loggingMasks.log) {
+    if (config.loggingFlags & level) {
+        console.log(text);
+    }
+}
+
 function activateNextNode(inputColor) {
     if( typeof activateNextNode.index == 'undefined' ) {
         activateNextNode.index = 0;
@@ -155,5 +161,5 @@ function activateNextNode(inputColor) {
 app.use('/', router);
 
 app.listen(port, function () {
-    console.log('Example app listening on port '+port+'!');
+    log('BrainStain app listening on port '+port+'!');
 })
