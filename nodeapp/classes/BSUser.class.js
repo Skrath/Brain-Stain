@@ -3,12 +3,19 @@ var uaParser = require('ua-parser-js');
 var languageParser = require('accept-language-parser');
 var moment = require('moment-timezone');
 
+var tools = require("../utility/tools.js");
+
 module.exports = class BSUser {
     constructor(req) {
         var ua = uaParser(req.headers['user-agent']);
         var languages = languageParser.parse(req.headers['accept-language']);
         
         this.ip = req.ip;
+        if (global.variables.config.devMode && Array.isArray(global.variables.config.developmentSettings.spoofIPs)) {
+            this.ip = global.variables.config.developmentSettings.spoofIPs[Math.floor(Math.random() * global.variables.config.developmentSettings.spoofIPs.length)];
+            tools.log('Using spoofed ip of: ' + this.ip, global.variables.internal.loggingMasks.development);
+        }
+        
         var geo = geoip.lookup(this.ip);
 
         if ( (ua !== null) && (ua !== undefined)) {

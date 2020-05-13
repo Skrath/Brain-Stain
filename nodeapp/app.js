@@ -10,23 +10,6 @@ const port = 8080;
 const { Neat } = require("@liquid-carrot/carrot");
 let neat = new Neat(1, 1, { population_size: 5 });
 
-const yaml = require('js-yaml');
-const fs = require('fs');
-
-var config = {
-    loggingFlags: 0
-};
-
-const internal = {
-    loggingMasks: {
-        development: 1,
-        log: 2,
-        warn: 4,
-        error: 8,
-        all: 1 + 2 + 4 + 8
-    }
-}
-
 // Parse URL-encoded bodies (as sent by HTML forms)
 app.use(express.urlencoded());
 
@@ -40,36 +23,15 @@ app.engine('html', require('hbs').__express);
 var hbs = require('hbs');
 
 var BSUser = require("./classes/BSUser.class.js");
-var BSColor = require("./classes/BSColor.class");
+var BSColor = require("./classes/BSColor.class.js");
+var tools = require("./utility/tools.js");
 
 hbs.registerPartials(__dirname + '/views/partials', function (err) {});
 
 hbs.localsAsTemplateData(app);
 
 if (require.main === module) {
-    loadConfig();
-}
-
-function loadConfig() {
-    try {
-        let fileContents = fs.readFileSync('./config/main.yml', 'utf8');
-        config = yaml.safeLoad(fileContents);
-
-        if (config.devMode) {
-            config.loggingFlags |= internal.loggingMasks.development;
-        } else {
-            config.devMode = false;
-        }
-
-        if (Array.isArray(config.logLevel)) {
-            config.logLevel.forEach(function(item) {
-                config.loggingFlags |= internal.loggingMasks[item];
-            });
-        }
-
-    } catch (e) {
-        log(e, internal.loggingMasks.error);
-    }
+    tools.loadConfig();
 }
 
 router.use(function (req,res,next) {
@@ -129,12 +91,6 @@ router.post('/submitscore', function(req, res) {
     res.send('1');
 });
 
-function log(text, level = internal.loggingMasks.log) {
-    if (config.loggingFlags & level) {
-        console.log(text);
-    }
-}
-
 function activateNextNode(inputColor) {
     if( typeof activateNextNode.index == 'undefined' ) {
         activateNextNode.index = 0;
@@ -161,5 +117,5 @@ function activateNextNode(inputColor) {
 app.use('/', router);
 
 app.listen(port, function () {
-    log('BrainStain app listening on port '+port+'!');
+    tools.log('BrainStain app listening on port '+port+'!');
 })

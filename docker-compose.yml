@@ -9,6 +9,8 @@ services:
       - ./nodeapp/app.js:/home/node/app/app.js
       - ./nodeapp/classes/:/home/node/app/classes/
       - ./nodeapp/config/:/home/node/app/config/
+      - ./nodeapp/init/:/home/node/app/init/
+      - ./nodeapp/utility/:/home/node/app/utility/
       - ./views:/home/node/app/views
     ports:
      - "80:8080"
