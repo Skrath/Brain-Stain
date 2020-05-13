@@ -1,0 +1,10 @@
+# devMode: true
+logLevel:
+  # - 'development'
+  # - 'log'
+  # - 'warn'
+  # - 'error'
+  # - 'all'
+developmentSettings:
+  spoofIPs:
+    # - '8.8.8.8'
