@@ -10,6 +10,23 @@ const port = 8080;
 const { Neat } = require("@liquid-carrot/carrot");
 let neat = new Neat(1, 1, { population_size: 5 });
 
+const yaml = require('js-yaml');
+const fs = require('fs');
+
+var config = {
+    loggingFlags: 0
+};
+
+const internal = {
+    loggingMasks: {
+        development: 1,
+        log: 2,
+        warn: 4,
+        error: 8,
+        all: 1 + 2 + 4 + 8
+    }
+}
+
 // Parse URL-encoded bodies (as sent by HTML forms)
 app.use(express.urlencoded());
 
@@ -28,6 +45,32 @@ var BSColor = require("./classes/BSColor.class");
 hbs.registerPartials(__dirname + '/views/partials', function (err) {});
 
 hbs.localsAsTemplateData(app);
+
+if (require.main === module) {
+    loadConfig();
+}
+
+function loadConfig() {
+    try {
+        let fileContents = fs.readFileSync('./config/main.yml', 'utf8');
+        config = yaml.safeLoad(fileContents);
+
+        if (config.devMode) {
+            config.loggingFlags |= internal.loggingMasks.development;
+        } else {
+            config.devMode = false;
+        }
+
+        if (Array.isArray(config.logLevel)) {
+            config.logLevel.forEach(function(item) {
+                config.loggingFlags |= internal.loggingMasks[item];
+            });
+        }
+
+    } catch (e) {
+        console.log(e);
+    }
+}
 
 router.use(function (req,res,next) {
     console.log( [req.hostname, req.protocol, '/' + req.method, req.originalUrl, 'from ' + req.ip].join(' '));
