@@ -1,12 +1,27 @@
 const yaml = require('js-yaml');
 const fs = require('fs');
+const moment = require('moment-timezone');
 
 var variables = require("../init/variables.js");
 
 module.exports = {
     log: function(text, level = variables.internal.loggingMasks.log) {
         if (variables.config.loggingFlags & level) {
-            console.log(text);
+            let currentTime = moment();
+            let prefix = '[' + currentTime.format('HH:mm:ss') + '] '
+            let logMessage = prefix + text;
+
+            if (variables.config.loggingLocationFlags & variables.internal.loggingLocationsMasks.console) {
+                console.log(logMessage);
+            }
+
+            if (variables.config.loggingLocationFlags & variables.internal.loggingLocationsMasks.disk) {
+                let filename = currentTime.format('MM-DD-YYYY') + '.log';
+
+                fs.appendFile('./logs/' + filename, logMessage + "\n", function (err) {
+                    if (err) throw err;
+                });
+            }
         }
     },
 
@@ -24,6 +39,12 @@ module.exports = {
             if (Array.isArray(variables.config.logLevel)) {
                 variables.config.logLevel.forEach(function(item) {
                     variables.config.loggingFlags |= variables.internal.loggingMasks[item];
+                });
+            }
+
+            if (Array.isArray(variables.config.logLocations)) {
+                variables.config.logLocations.forEach(function(item) {
+                    variables.config.loggingLocationFlags |= variables.internal.loggingLocationsMasks[item];
                 });
             }
 

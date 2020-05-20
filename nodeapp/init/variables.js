@@ -25,6 +25,7 @@ module.exports = {
     },
     
     internal: {
-        loggingMasks: new bitmask(['development', 'log', 'warn', 'error'])
+        loggingMasks: new bitmask(['development', 'log', 'warn', 'error']),
+        loggingLocationsMasks: new bitmask(['console', 'disk'])
     }
 };

@@ -32,6 +32,7 @@ hbs.localsAsTemplateData(app);
 
 if (require.main === module) {
     tools.loadConfig();
+    tools.log('BrainStain app starting');
 }
 
 router.use(function (req,res,next) {
