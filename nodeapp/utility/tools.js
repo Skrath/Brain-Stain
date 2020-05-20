@@ -5,18 +5,18 @@ const moment = require('moment-timezone');
 var variables = require("../init/variables.js");
 
 module.exports = {
-    log: function(text, level = variables.internal.loggingMasks.log) {
-        if (variables.config.loggingFlags & level) {
+    log: function(text, level = variables.internal.logLevelMasks.log) {
+        if (variables.config.logLevelFlags & level) {
             let currentTime = moment();
-            let levelName = variables.internal.loggingMasks.lookup(level);
+            let levelName = variables.internal.logLevelMasks.lookup(level);
             let prefix = '[' + currentTime.format('HH:mm:ss') + '] [' + levelName + '] ';
             let logMessage = prefix + text;
 
-            if (variables.config.loggingLocationFlags & variables.internal.loggingLocationsMasks.console) {
+            if (variables.config.logLocationFlags & variables.internal.logLocationMasks.console) {
                 console.log(logMessage);
             }
 
-            if (variables.config.loggingLocationFlags & variables.internal.loggingLocationsMasks.disk) {
+            if (variables.config.logLocationFlags & variables.internal.logLocationMasks.disk) {
                 let filename = currentTime.format('MM-DD-YYYY') + '.log';
 
                 fs.appendFile('./logs/' + filename, logMessage + "\n", function (err) {
@@ -32,27 +32,23 @@ module.exports = {
             variables.config = yaml.safeLoad(fileContents);
     
             if (variables.config.devMode) {
-                variables.config.loggingFlags |= variables.internal.loggingMasks.development;
+                variables.config.logLevelFlags |= variables.internal.logLevelMasks.development;
             } else {
                 variables.config.devMode = false;
             }
     
-            if (Array.isArray(variables.config.logLevel)) {
-                variables.config.logLevel.forEach(function(item) {
-                    variables.config.loggingFlags |= variables.internal.loggingMasks[item];
-                });
-            }
-
-            if (Array.isArray(variables.config.logLocations)) {
-                variables.config.logLocations.forEach(function(item) {
-                    variables.config.loggingLocationFlags |= variables.internal.loggingLocationsMasks[item];
-                });
-            }
+            ['logLevel', 'logLocation'].forEach(name => {
+                if (Array.isArray(variables.config[name])) {
+                    variables.config[name].forEach(item => {
+                        variables.config[name + 'Flags'] |= variables.internal[name + 'Masks'][item];
+                    });
+                }
+            });
 
             global.variables = variables;
             
         } catch (e) {
-            console.log(e, variables.internal.loggingMasks.error);
+            console.log(e, variables.internal.logLevelMasks.error);
         }
     }
 }

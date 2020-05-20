@@ -13,7 +13,7 @@ module.exports = class BSUser {
         this.ip = req.ip;
         if (global.variables.config.devMode && Array.isArray(global.variables.config.developmentSettings.spoofIPs)) {
             this.ip = global.variables.config.developmentSettings.spoofIPs[Math.floor(Math.random() * global.variables.config.developmentSettings.spoofIPs.length)];
-            tools.log('Using spoofed ip of: ' + this.ip, global.variables.internal.loggingMasks.development);
+            tools.log('Using spoofed ip of: ' + this.ip, global.variables.internal.logLevelMasks.development);
         }
         
         var geo = geoip.lookup(this.ip);
