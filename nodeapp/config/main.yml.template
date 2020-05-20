@@ -5,6 +5,10 @@ logLevel:
   # - 'warn'
   # - 'error'
   # - 'all'
+logLocations:
+  # - 'console'
+  # - 'disk'
+  # - 'all'
 developmentSettings:
   spoofIPs:
     # - '8.8.8.8'
