@@ -36,7 +36,7 @@ if (require.main === module) {
 }
 
 router.use(function (req,res,next) {
-    console.log( [req.hostname, req.protocol, '/' + req.method, req.originalUrl, 'from ' + req.ip].join(' '));
+    tools.log( [req.hostname, req.protocol, '/' + req.method, req.originalUrl, 'from ' + req.ip].join(' '));
 
     next();
 });
