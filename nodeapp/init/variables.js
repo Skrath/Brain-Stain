@@ -14,6 +14,17 @@ class bitmask {
         });
     }
 
+    lookup(maskValue) {
+        let output;
+        Object.keys(this.masks).forEach(name => {
+            if (maskValue == this.masks[name]) {
+                output = name;
+            }
+        });
+
+        return output;
+    }
+
     get all() {
         return this.total;
     }

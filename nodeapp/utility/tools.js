@@ -8,7 +8,8 @@ module.exports = {
     log: function(text, level = variables.internal.loggingMasks.log) {
         if (variables.config.loggingFlags & level) {
             let currentTime = moment();
-            let prefix = '[' + currentTime.format('HH:mm:ss') + '] '
+            let levelName = variables.internal.loggingMasks.lookup(level);
+            let prefix = '[' + currentTime.format('HH:mm:ss') + '] [' + levelName + '] ';
             let logMessage = prefix + text;
 
             if (variables.config.loggingLocationFlags & variables.internal.loggingLocationsMasks.console) {
