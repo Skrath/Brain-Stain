@@ -1,15 +1,30 @@
+class bitmask {
+    constructor(keys) {
+        this.masks = {};
+        this.total = 0;
+
+        keys.forEach(name => {
+            let maskValue = Math.pow(2, Object.keys(this.masks).length)
+            this.masks[name] = maskValue;
+            this.total += maskValue;
+
+            Object.defineProperty(this, name, {
+                get: function () { return this.masks[name]; }
+            });
+        });
+    }
+
+    get all() {
+        return this.total;
+    }
+}
+
 module.exports = {
     config: {
         loggingFlags: 0
     },
     
     internal: {
-        loggingMasks: {
-            development: 1,
-            log: 2,
-            warn: 4,
-            error: 8,
-            all: 1 + 2 + 4 + 8
-        }
+        loggingMasks: new bitmask(['development', 'log', 'warn', 'error'])
     }
 };
