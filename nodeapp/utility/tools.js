@@ -17,7 +17,12 @@ module.exports = {
             }
 
             if (variables.config.logLocationFlags & variables.internal.logLocationMasks.disk) {
-                let filename = currentTime.format(global.variables.config.dateFormat) + '.log';
+                let filename = currentTime.format(global.variables.config.dateFormat)
+
+                if (variables.config.splitLogsByLevelFlags & level) {
+                    filename += '_' + levelName;
+                }
+                filename += '.log';
 
                 fs.appendFile('./logs/' + filename, logMessage + "\n", function (err) {
                     if (err) throw err;
@@ -37,7 +42,7 @@ module.exports = {
                 variables.config.devMode = false;
             }
     
-            ['logLevel', 'logLocation'].forEach(name => {
+            ['logLevel', 'logLocation', 'splitLogsByLevel'].forEach(name => {
                 if (Array.isArray(variables.config[name])) {
                     variables.config[name].forEach(item => {
                         variables.config[name + 'Flags'] |= variables.internal[name + 'Masks'][item];

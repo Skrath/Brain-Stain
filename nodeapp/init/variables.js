@@ -33,11 +33,13 @@ class bitmask {
 module.exports = {
     config: {
         logLevelFlags: 0,
-        logLocationFlags: 0
+        logLocationFlags: 0,
+        splitLogsByLevelFlags: 0
     },
     
     internal: {
         logLevelMasks: new bitmask(['development', 'log', 'warn', 'error']),
-        logLocationMasks: new bitmask(['console', 'disk'])
+        logLocationMasks: new bitmask(['console', 'disk']),
+        splitLogsByLevelMasks: new bitmask(['development', 'log', 'warn', 'error']),
     }
 };

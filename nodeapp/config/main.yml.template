@@ -9,6 +9,12 @@ logLocations:
   # - 'console'
   # - 'disk'
   # - 'all'
+splitLogsByLevel:
+  # - 'development'
+  # - 'log'
+  # - 'warn'
+  - 'error'
+  # - 'all'
 timeFormat: 'HH:mm:ss'
 dateFormat: 'MM-DD-YYYY'
 developmentSettings:
