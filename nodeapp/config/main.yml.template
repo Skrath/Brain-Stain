@@ -9,6 +9,8 @@ logLocations:
   # - 'console'
   # - 'disk'
   # - 'all'
+timeFormat: 'HH:mm:ss'
+dateFormat: 'MM-DD-YYYY'
 developmentSettings:
   spoofIPs:
     # - '8.8.8.8'

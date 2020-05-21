@@ -9,7 +9,7 @@ module.exports = {
         if (variables.config.logLevelFlags & level) {
             let currentTime = moment();
             let levelName = variables.internal.logLevelMasks.lookup(level);
-            let prefix = '[' + currentTime.format('HH:mm:ss') + '] [' + levelName + '] ';
+            let prefix = '[' + currentTime.format(global.variables.config.timeFormat) + '] [' + levelName + '] ';
             let logMessage = prefix + text;
 
             if (variables.config.logLocationFlags & variables.internal.logLocationMasks.console) {
@@ -17,7 +17,7 @@ module.exports = {
             }
 
             if (variables.config.logLocationFlags & variables.internal.logLocationMasks.disk) {
-                let filename = currentTime.format('MM-DD-YYYY') + '.log';
+                let filename = currentTime.format(global.variables.config.dateFormat) + '.log';
 
                 fs.appendFile('./logs/' + filename, logMessage + "\n", function (err) {
                     if (err) throw err;
@@ -46,7 +46,6 @@ module.exports = {
             });
 
             global.variables = variables;
-            
         } catch (e) {
             console.log(e, variables.internal.logLevelMasks.error);
         }
