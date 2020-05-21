@@ -52,7 +52,7 @@ module.exports = {
 
             global.variables = variables;
         } catch (e) {
-            console.log(e, variables.internal.logLevelMasks.error);
+            console.log(e);
         }
     }
 }
