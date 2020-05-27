@@ -24,8 +24,8 @@ module.exports = {
                 }
                 filename += '.log';
 
-                fs.appendFile('./logs/' + filename, logMessage + "\n", function (err) {
-                    if (err) throw err;
+                fs.appendFile('./logs/' + filename, logMessage + "\n", function (e) {
+                    if (e) throw e;
                 });
             }
         }
@@ -52,7 +52,7 @@ module.exports = {
 
             global.variables = variables;
         } catch (e) {
-            console.log(e);
+            throw e;
         }
     }
 }
